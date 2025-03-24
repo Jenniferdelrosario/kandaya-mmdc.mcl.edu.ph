@@ -1,34 +1,36 @@
-# Employee details (from motorph sheet)
+# Employee Details
 employee = {
-    "name": "Eduard",
-    "employee_no": 1,
-    "daily_rate": 500
-    "days_worked": 5
+    "name": "Hernandez Eduard",
+    "employee_no": 10005,
+    "hourly_rate": 313.51
 }
 
-# Time Calculations - Weekly Salary
-weekly_salary = employee["daily_rate"] * employee["days_worked"]
-print(f"Employee: {employee['name']} ({employee['employee_no']})")
-print(f"Weekly Salary: PHP {weekly_salary}")
+# Number of days worked (Example input)
+days_worked = 5  # Change as needed
 
-# SSS Deduction
-sss_deduction = weekly_salary * 0.04
-print(f"SSS Deduction: PHP {sss_deduction}")
+# Weekly Salary Calculation
+weekly_salary = 0
+day = 0
+while day < days_worked:
+    weekly_salary += employee["hourly_rate"]
+    day += 1
 
-# PhilHealth Deduction
-philhealth_deduction = weekly_salary * 0.02
-print(f"PhilHealth Deduction: PHP {philhealth_deduction}")
+print(f"Employee: {employee['name']} (ID: {employee['employee_no']})")
+print(f"Weekly Salary: PHP {weekly_salary:.2f}\n")
 
-# Pag-IBIG Deduction 
-pagibig_deduction = weekly_salary * 0.01
-print(f"Pag-IBIG Deduction: PHP {pagibig_deduction}")
+# Deductions Calculation
+deductions = {
+    "SSS": 0.045 * weekly_salary,  # Example 4.5% deduction
+    "PhilHealth": 0.03 * weekly_salary,  # Example 3% deduction
+    "PagIBIG": 100,  # Fixed contribution
+    "Withholding Tax": 0.10 * weekly_salary  # Example 10% tax
+}
 
-# Withholding Tax 
-withholding_tax = weekly_salary * 0.10
-print(f"Withholding Tax: PHP {withholding_tax}")
+total_deductions = 0
+print("Deductions:")
+for key, value in deductions.items():
+    print(f"{key}: PHP {value:.2f}")
+    total_deductions += value
 
-# Total Deductions and Net Salary
-total_deductions = sss_deduction + philhealth_deduction + pagibig_deduction + withholding_tax
 net_salary = weekly_salary - total_deductions
-print(f"Total Deductions: PHP {total_deductions}")
-print(f"Net Salary: PHP {net_salary}")
+print(f"\nNet Salary: PHP {net_salary:.2f}")
