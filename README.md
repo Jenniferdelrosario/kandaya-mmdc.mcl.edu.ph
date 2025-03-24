@@ -1,70 +1,34 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-
-package com.mycompany.timecalculation;
-
-// Import
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.Scanner;
-
-
-/**
- *
- * @Jennifer Del Rosario 
- */
-public class TimeCalculation {
-
-    public static void main(String[] args) {
-        
-        Scanner timeScanner = new Scanner(System.in);
-        //Time
-        int hours = 0;
-        int minutes = 0;
-        DateTimeFormatter timeFmt1 = DateTimeFormatter.ofPattern("HH:MM");
-        DateTimeFormatter timeFmt2 = DateTimeFormatter.ofPattern("HH");
-        
-        //Time-in
-        System.out.println("Time-in: ");
-        LocalTime timeIn = LocalTime.parse(timeScanner.nextLine(), timeFmt1);
-        
-        //Time-out
-        System.out.println("Time-out: ");
-        LocalTime timeOut = LocalTime.parse(timeScanner.nextLine(), timeFmt1);
-        
-        //Total No. of Hours
-        int hoursWorked = timeOut.getHour() - timeIn.getHour();
-        int minWorked = timeOut.getMinute() - timeIn.getMinute();    
-        
-        //Rounded
-            int roundedTime = hoursWorked;
-            if (minWorked > 0){
-                roundedTime++;
-            }
-        
-        //Salary
-        DecimalFormat df = new DecimalFormat ("##,##0.00");
-        
-        double hourlyRate = 200;
-        double minuteRate = hourlyRate/60;
-        double dailySalary = (hourlyRate * hoursWorked) + (minuteRate * minWorked);
-        
-        
-        System.out.println("Total Time: " + hoursWorked + " hours and " + minWorked + " minutes");
-        System.out.println("Estimated No. of Hours: " + roundedTime + " hours");
-        System.out.println("Rate per Minute: " + df.format(minuteRate) + " per minute");
-        System.out.println("Hourly Rate: " + df.format(hourlyRate) + " per hour");
-        System.out.println("Daily Salary: " + df.format(dailySalary));
-        
-        timeScanner.close();
-        
-    }
+# Employee details (from motorph sheet)
+employee = {
+    "name": "Eduard",
+    "employee_no": 1,
+    "daily_rate": 500
+    "days_worked": 5
 }
 
+# Time Calculations - Weekly Salary
+weekly_salary = employee["daily_rate"] * employee["days_worked"]
+print(f"Employee: {employee['name']} ({employee['employee_no']})")
+print(f"Weekly Salary: PHP {weekly_salary}")
+
+# SSS Deduction (Example: 4% of weekly salary)
+sss_deduction = weekly_salary * 0.04
+print(f"SSS Deduction: PHP {sss_deduction}")
+
+# PhilHealth Deduction (Example: 2% of weekly salary)
+philhealth_deduction = weekly_salary * 0.02
+print(f"PhilHealth Deduction: PHP {philhealth_deduction}")
+
+# Pag-IBIG Deduction (Example: 1% of weekly salary)
+pagibig_deduction = weekly_salary * 0.01
+print(f"Pag-IBIG Deduction: PHP {pagibig_deduction}")
+
+# Withholding Tax (Example: 10% of weekly salary)
+withholding_tax = weekly_salary * 0.10
+print(f"Withholding Tax: PHP {withholding_tax}")
+
+# Total Deductions and Net Salary
+total_deductions = sss_deduction + philhealth_deduction + pagibig_deduction + withholding_tax
+net_salary = weekly_salary - total_deductions
+print(f"Total Deductions: PHP {total_deductions}")
+print(f"Net Salary: PHP {net_salary}")
