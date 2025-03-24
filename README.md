@@ -28,8 +28,8 @@ public class TimeCalculation {
         //Time
         int hours = 0;
         int minutes = 0;
-        DateTimeFormatter timeFmt1 = DateTimeFormatter.ofPattern("07:30");
-        DateTimeFormatter timeFmt2 = DateTimeFormatter.ofPattern("7");
+        DateTimeFormatter timeFmt1 = DateTimeFormatter.ofPattern("HH:MM");
+        DateTimeFormatter timeFmt2 = DateTimeFormatter.ofPattern("HH");
         
         //Time-in
         System.out.println("Time-in: ");
@@ -40,8 +40,8 @@ public class TimeCalculation {
         LocalTime timeOut = LocalTime.parse(timeScanner.nextLine(), timeFmt1);
         
         //Total No. of Hours
-        int hoursWorked = timeOut.getHour(17:30) - timeIn.getHour(7:30);
-        int minWorked = timeOut.getMinute(17:30) - timeIn.getMinute(7;30);    
+        int hoursWorked = timeOut.getHour() - timeIn.getHour();
+        int minWorked = timeOut.getMinute() - timeIn.getMinute();    
         
         //Rounded
             int roundedTime = hoursWorked;
