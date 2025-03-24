@@ -11,19 +11,19 @@ weekly_salary = employee["daily_rate"] * employee["days_worked"]
 print(f"Employee: {employee['name']} ({employee['employee_no']})")
 print(f"Weekly Salary: PHP {weekly_salary}")
 
-# SSS Deduction (Example: 4% of weekly salary)
+# SSS Deduction
 sss_deduction = weekly_salary * 0.04
 print(f"SSS Deduction: PHP {sss_deduction}")
 
-# PhilHealth Deduction (Example: 2% of weekly salary)
+# PhilHealth Deduction
 philhealth_deduction = weekly_salary * 0.02
 print(f"PhilHealth Deduction: PHP {philhealth_deduction}")
 
-# Pag-IBIG Deduction (Example: 1% of weekly salary)
+# Pag-IBIG Deduction 
 pagibig_deduction = weekly_salary * 0.01
 print(f"Pag-IBIG Deduction: PHP {pagibig_deduction}")
 
-# Withholding Tax (Example: 10% of weekly salary)
+# Withholding Tax 
 withholding_tax = weekly_salary * 0.10
 print(f"Withholding Tax: PHP {withholding_tax}")
 
