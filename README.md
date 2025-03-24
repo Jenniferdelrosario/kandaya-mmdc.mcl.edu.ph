@@ -1,4 +1,4 @@
-# Payroll Calculation Script
+# Payroll Calculation 
 
 # Constants for deduction rates
 SSS_RATE = 0.04
