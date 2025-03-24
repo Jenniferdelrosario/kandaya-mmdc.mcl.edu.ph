@@ -5,7 +5,7 @@ employee = {
     "hourly_rate": 313.51
 }
 
-# Number of days worked (Example input)
+# Number of days worked 
 days_worked = 5  
 
 # Weekly Salary Calculation
