@@ -6,11 +6,11 @@ employee = {
 }
 
 # Number of days worked (Example input)
-days_worked = 5  # Change as needed
+days_worked = 5  
 
 # Weekly Salary Calculation
-weekly_salary = 0
-day = 0
+weekly_salary = 500
+day = 1
 while day < days_worked:
     weekly_salary += employee["hourly_rate"]
     day += 1
@@ -20,10 +20,10 @@ print(f"Weekly Salary: PHP {weekly_salary:.2f}\n")
 
 # Deductions Calculation
 deductions = {
-    "SSS": 0.045 * weekly_salary,  # Example 4.5% deduction
-    "PhilHealth": 0.03 * weekly_salary,  # Example 3% deduction
+    "SSS": 0.045 * weekly_salary, # 4.5% deduction
+    "PhilHealth": 0.03 * weekly_salary,  # 3% deduction
     "PagIBIG": 100,  # Fixed contribution
-    "Withholding Tax": 0.10 * weekly_salary  # Example 10% tax
+    "Withholding Tax": 0.10 * weekly_salary  # 10% tax
 }
 
 total_deductions = 0
