@@ -1,49 +1,89 @@
-class Employee:
-    def __init__(self, emp_id, name, basic_salary, hourly_rate):
-        self.emp_id = emp_id
-        self.name = name
-        self.basic_salary = basic_salary
-        self.hourly_rate = hourly_rate
-        self.work_hours = []
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-    def add_work_hours(self, date, login, logout):
-        hours_worked = max(0, (logout - login).total_seconds() / 3600)  # Convert seconds to hours
-        self.work_hours.append((date, hours_worked))
+class Employee {
+    private int empId;
+    private String name;
+    private double basicSalary;
+    private double hourlyRate;
+    private List<WorkHours> workHours;
 
-    def calculate_weekly_salary(self):
-        total_hours = sum(hours for _, hours in self.work_hours)
-        gross_salary = total_hours * self.hourly_rate
-        return round(gross_salary, 2)
+    public Employee(int empId, String name, double basicSalary, double hourlyRate) {
+        this.empId = empId;
+        this.name = name;
+        this.basicSalary = basicSalary;
+        this.hourlyRate = hourlyRate;
+        this.workHours = new ArrayList<>();
+    }
 
-    def calculate_deductions(self, sss_rate=500, philhealth_rate=300, pagibig_rate=200, tax_rate=0.1):
-        sss = sss_rate
-        philhealth = philhealth_rate
-        pagibig = pagibig_rate
-        tax = tax_rate * self.calculate_weekly_salary()
-        total_deductions = sss + philhealth + pagibig + tax
-        return {"SSS": round(sss, 2), "PhilHealth": round(philhealth, 2), "Pag-IBIG": round(pagibig, 2), "Tax": round(tax, 2), "Total": round(total_deductions, 2)}
+    public void addWorkHours(String date, LocalDateTime login, LocalDateTime logout) {
+        double hoursWorked = Math.max(0, Duration.between(login, logout).toMinutes() / 60.0);
+        workHours.add(new WorkHours(LocalDate.parse(date), hoursWorked));
+    }
 
-    def calculate_net_salary(self):
-        return round(self.calculate_weekly_salary() - self.calculate_deductions()["Total"], 2)
+    public double calculateWeeklySalary() {
+        double totalHours = workHours.stream().mapToDouble(WorkHours::getHoursWorked).sum();
+        return Math.round(totalHours * hourlyRate * 100.0) / 100.0;
+    }
 
-    def display_summary(self):
-        print(f"Employee: {self.name} ({self.emp_id})")
-        print(f"Gross Weekly Salary: PHP {self.calculate_weekly_salary():,.2f}")
-        print("Deductions:")
-        for key, value in self.calculate_deductions().items():
-            print(f"  {key}: PHP {value:,.2f}")
-        print(f"Net Weekly Salary: PHP {self.calculate_net_salary():,.2f}")
+    public Map<String, Double> calculateDeductions(double sssRate, double philhealthRate, double pagibigRate, double taxRate) {
+        double sss = sssRate;
+        double philhealth = philhealthRate;
+        double pagibig = pagibigRate;
+        double tax = taxRate * calculateWeeklySalary();
+        double totalDeductions = sss + philhealth + pagibig + tax;
 
-# Usage
-from datetime import datetime
+        Map<String, Double> deductions = new HashMap<>();
+        deductions.put("SSS", Math.round(sss * 100.0) / 100.0);
+        deductions.put("PhilHealth", Math.round(philhealth * 100.0) / 100.0);
+        deductions.put("Pag-IBIG", Math.round(pagibig * 100.0) / 100.0);
+        deductions.put("Tax", Math.round(tax * 100.0) / 100.0);
+        deductions.put("Total", Math.round(totalDeductions * 100.0) / 100.0);
+        return deductions;
+    }
 
-# Employee instance
-eduard = Employee(10005, "Eduard Hernandez", 52670, 313.51)
+    public double calculateNetSalary() {
+        return Math.round((calculateWeeklySalary() - calculateDeductions(500, 300, 200, 0.1).get("Total")) * 100.0) / 100.0;
+    }
 
-# Add work hours
-eduard.add_work_hours("06/03/2024", datetime(2024, 6, 3, 9, 48), datetime(2024, 6, 3, 17, 13))
-eduard.add_work_hours("06/04/2024", datetime(2024, 6, 4, 9, 50), datetime(2024, 6, 4, 20, 20))
-eduard.add_work_hours("06/05/2024", datetime(2024, 6, 5, 9, 10), datetime(2024, 6, 5, 17, 17))
+    public void displaySummary() {
+        System.out.println("Employee: " + name + " (" + empId + ")");
+        System.out.printf("Gross Weekly Salary: PHP %.2f%n", calculateWeeklySalary());
+        System.out.println("Deductions:");
+        for (Map.Entry<String, Double> entry : calculateDeductions(500, 300, 200, 0.1).entrySet()) {
+            System.out.printf("  %s: PHP %.2f%n", entry.getKey(), entry.getValue());
+        }
+        System.out.printf("Net Weekly Salary: PHP %.2f%n", calculateNetSalary());
+    }
+}
 
-# Display summary
-eduard.display_summary()
+class WorkHours {
+    private LocalDate date;
+    private double hoursWorked;
+
+    public WorkHours(LocalDate date, double hoursWorked) {
+        this.date = date;
+        this.hoursWorked = hoursWorked;
+    }
+
+    public double getHoursWorked() {
+        return hoursWorked;
+    }
+}
+
+public class PayrollSystem {
+    public static void main(String[] args) {
+        Employee eduard = new Employee(10005, "Eduard Hernandez", 52670, 313.51);
+
+        eduard.addWorkHours("2024-06-03", LocalDateTime.of(2024, 6, 3, 9, 48), LocalDateTime.of(2024, 6, 3, 17, 13));
+        eduard.addWorkHours("2024-06-04", LocalDateTime.of(2024, 6, 4, 9, 50), LocalDateTime.of(2024, 6, 4, 20, 20));
+        eduard.addWorkHours("2024-06-05", LocalDateTime.of(2024, 6, 5, 9, 10), LocalDateTime.of(2024, 6, 5, 17, 17));
+
+        eduard.displaySummary();
+    }
+}
