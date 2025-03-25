@@ -34,7 +34,7 @@ class Employee:
             print(f"  {key}: PHP {value:,.2f}")
         print(f"Net Weekly Salary: PHP {self.calculate_net_salary():,.2f}")
 
-# Example Usage
+# Usage
 from datetime import datetime
 
 # Employee instance
